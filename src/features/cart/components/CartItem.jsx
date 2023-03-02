@@ -24,7 +24,7 @@ function CartItem({ id, name, result, coef }) {
         </div>
         <AiOutlineDelete
           role="button"
-          className="text-[20px] ml-5 hover:opacity-60"
+          className="text-[20px] ml-auto pl-1 hover:opacity-60"
           onClick={() => dispatch(removeBet(id))}
         />
       </div>
