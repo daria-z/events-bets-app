@@ -14,19 +14,28 @@ const Cart = () => {
 
   const renderItems = cart.bets.map((bet) => {
     return (
-      <CartItem
-        id={bet.id}
-        name={bet.name}
-        result={bet.result}
-        coef={bet.coef}
-        key={nanoid()}
-      />
+      <>
+        <CartItem
+          id={bet.id}
+          name={bet.name}
+          result={bet.result}
+          coef={bet.coef}
+          key={nanoid()}
+        />
+      </>
     );
   });
 
+  const renderContent = (
+    <>
+      {renderItems}
+      <CartForm />
+    </>
+  );
+
   const renderEmptyCart = (
     <h2 className="text-2xl text-center mb-3">
-      Тут пока пусто. Нужно выбрать хотя бы одно событие
+      Тут пока пусто. Нужно выбрать хотя бы одно событие чтобы сделать ставку
     </h2>
   );
 
@@ -42,17 +51,17 @@ const Cart = () => {
       }
     >
       <div className="max-w-xl">
-        {cart.bets.length < 1 ? renderEmptyCart : renderItems}
-       <p className="text-center mb-2">
-          Суммарный коэффициент корзины: {cart.coefSum}
-        </p>
+        {cart.bets.length < 1 ? renderEmptyCart : renderContent}
       </div>
-      <CartForm />
     </Layout>
   );
 };
 
 export default Cart;
+
+
+
+
 
 
 

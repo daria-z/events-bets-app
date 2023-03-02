@@ -10,7 +10,7 @@ const initialState = {
   error: null,
 };
 
-export const fetchEvents = createAsyncThunk("posts/fetchEvents", async () => {
+export const fetchEvents = createAsyncThunk("events/fetchEvents", async () => {
   const response = await axios.get(EVENTS_URL);
   return response.data;
 });

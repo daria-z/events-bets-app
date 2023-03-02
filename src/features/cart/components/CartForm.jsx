@@ -1,29 +1,47 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectAllCart, setBetAmount } from "../cartSlise";
+import { selectAllCart, placeNewBet, clearCart } from "../cartSlise";
 
 function CartForm() {
-  const cart = useSelector(selectAllCart);
-
-  console.log(cart.betAmount);
   const dispatch = useDispatch();
 
+  const cart = useSelector(selectAllCart);
+
   const [sum, setSum] = useState("");
-  const [winAmount, setWinAmount] = useState(sum * cart.coefSum);
+  const [winAmount, setWinAmount] = useState(0);
+  const [addRequestStatus, setAddRequestStatus] = useState("idle");
 
   const onSumChange = (e) => {
     setSum(e.target.value);
     setWinAmount(() => (e.target.value * cart.coefSum).toFixed(2));
   };
 
-  const buttonDisabled = Boolean(!sum > 0 || cart.bets.length < 1);
+  const canPlace =
+    Boolean(sum > 0 || cart.bets.length > 1) && addRequestStatus === "idle";;
 
-  const placeBet = () => {
-    console.log("place");
+
+   const placeBetClicked = () => {
+     if (canPlace) {
+       try {
+         setAddRequestStatus("pending");
+         dispatch(placeNewBet({ ...cart, betAmount: sum }));
+         dispatch(clearCart());
+         setSum("");
+         setWinAmount(0);
+         console.log("Ставка сделана")
+       } catch (err) {
+         console.error("Не получилось сделать ставку, попробуйте ещё раз", err);
+       } finally {
+         setAddRequestStatus("idle");
+       }
+     }
   };
 
   return (
     <>
+      <p className="text-center mb-2">
+        Суммарный коэффициент корзины: {(cart.coefSum).toFixed(2)}
+      </p>
       <form className="text-center">
         <label htmlFor="sum">Сумма ставки: </label>
         <input
@@ -39,14 +57,14 @@ function CartForm() {
         <p>Возможный выигрыш: {winAmount} ₽</p>
 
         <button
-          disabled={buttonDisabled}
-          onClick={placeBet}
-          type="submit"
+          disabled={!canPlace}
+          onClick={placeBetClicked}
+          type="button"
           className={`bg-white hover:bg-lightGrey2 text-gray-800 font-semibold mt-3 py-2 px-4 border border-gray-400 rounded shadow ${
-            buttonDisabled && "opacity-50 cursor-not-allowed hover:bg-opacity-0"
+            !canPlace && "opacity-50 cursor-not-allowed hover:bg-opacity-0"
           }`}
         >
-          Готово
+          Сделать ставку
         </button>
       </form>
     </>

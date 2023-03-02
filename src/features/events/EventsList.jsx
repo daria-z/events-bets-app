@@ -22,20 +22,6 @@ const EventsList = () => {
     }
   }, [eventsStatus, dispatch]);
 
-  // const renderEvents = events.map((event) => {
-  //   return (
-  //     <>
-  //       <EventCard
-  //         key={nanoid()}
-  //         id={event.id}
-  //         name={event.name}
-  //         results={event.results}
-  //         description={event.description}
-  //       />
-  //     </>
-  //   );
-  // });
-
   let content;
   if (eventsStatus === "loading") {
     content = <p>"Loading..."</p>;
