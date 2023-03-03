@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import AppLayout from "./components/AppLayout"
-import Cart from "./features/cart/Cart";
+import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 
 function App() {

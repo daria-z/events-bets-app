@@ -2,15 +2,11 @@ import { useSelector } from "react-redux";
 import { selectAllCart } from "./cartSlise";
 import { nanoid } from "@reduxjs/toolkit";
 
-import Layout from "../../components/Layout";
-import HeaderLink from "../../components/HeaderLink";
-import { AiOutlineHome } from "react-icons/ai";
 import CartItem from "./components/CartItem";
 import CartForm from "./components/CartForm";
 
-const Cart = () => {
+const CartContent = () => {
   const cart = useSelector(selectAllCart);
-  console.log(cart);
 
   const renderItems = cart.bets.map((bet) => {
     return (
@@ -41,23 +37,14 @@ const Cart = () => {
 
 
   return (
-    <Layout
-      title="Cart"
-      link={
-        <HeaderLink
-          linkTo="/"
-          icon={<AiOutlineHome className="text-[25px]" />}
-        />
-      }
-    >
       <div className="max-w-xl">
         {cart.bets.length < 1 ? renderEmptyCart : renderContent}
       </div>
-    </Layout>
   );
 };
 
-export default Cart;
+export default CartContent;
+
 
 
 
